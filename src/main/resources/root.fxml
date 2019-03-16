@@ -3,17 +3,48 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox fx:controller="pl.sda.javafx.controller.RootController" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.sda.javafx.controller.RootController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <TextField fx:id="city" layoutX="132.0" layoutY="102.0" />
-            <Button onAction="#setCity" fx:id="search" layoutX="312.0" layoutY="102.0" mnemonicParsing="false" text="Szukaj" />
-            <Label fx:id="Text1" layoutX="77.0" layoutY="169.0" text="Temperatura odczuwalna" textFill="#11289a" />
-            <Label fx:id="TeperatureIn" layoutX="253.0" layoutY="169.0" />
+            <TextField fx:id="city" layoutX="32.0" layoutY="90.0" />
+            <Button fx:id="search" layoutX="203.0" layoutY="90.0" mnemonicParsing="false" onAction="#setCity" text="Szukaj" />
+             <Label layoutX="340.0" layoutY="215.0" text="Temperatura odczuwalna" textFill="#11289a" />
+            <Label fx:id="TemperatureCIn" layoutX="500.0" layoutY="180.0" text=" " />
+            <Label layoutX="32.0" layoutY="30.0" prefHeight="30.0" prefWidth="358.0" text="Aktualna pogoda w każdym mieście">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="180.0" text="Miasto" textFill="#11289a" />
+            <Label layoutX="30.0" layoutY="215.0" text="Państwo" textFill="#11289a" />
+            <Label layoutX="30.0" layoutY="250.0" text="Czas lokalny" textFill="#11289a" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="426.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+            <Label layoutX="30.0" layoutY="285.0" text="Czas aktualizacji " textFill="#11289a" />
+            <Label layoutX="30.0" layoutY="320.0" text="Opis pogody" textFill="#11289a" />
+            <Label layoutX="340.0" layoutY="250.0" text="Prędkość wiatru" textFill="#11289a" />
+            <Label layoutX="340.0" layoutY="180.0" text="Temperatura" textFill="#11289a" />
+            <Label layoutX="340.0" layoutY="285.0" text="Cśnienie" textFill="#11289a" />
+            <Label layoutX="340.0" layoutY="320.0" text="Wilgotność" textFill="#11289a" />
+            <Label layoutX="340.0" layoutY="355.0" text="Zachmurzenie" textFill="#11289a" />
+            <Label fx:id="CityIn" layoutX="160.0" layoutY="180.0" text=" " />
+            <Label fx:id="CountryIn" layoutX="160.0" layoutY="215.0" text=" " />
+            <Label fx:id="LocalTime" layoutX="160.0" layoutY="250.0" text=" " />
+            <Label fx:id="UpdateTime" layoutX="160.0" layoutY="285.0" text=" " />
+            <Label fx:id="Description" layoutX="160.0" layoutY="320.0" text=" " />
+            <Label fx:id="FeelTemperatureFIn" layoutX="585.0" layoutY="180.0" text=" " />
+            <Label fx:id="FeelTemperatureCIn" layoutX="500.0" layoutY="215.0" text=" " />
+            <Label fx:id="TemperatureFIn" layoutX="585.0" layoutY="215.0" text=" " />
+            <Label fx:id="WindKphIn" layoutX="500.0" layoutY="250.0" text=" " />
+            <Label fx:id="WindMphIn" layoutX="585.0" layoutY="250.0" text=" " />
+            <Label fx:id="PressureIn" layoutX="500.0" layoutY="285.0" text=" " />
+            <Label fx:id="HumdityIn" layoutX="500.0" layoutY="320.0" text=" " />
+            <Label fx:id="Cloudy" layoutX="500.0" layoutY="355.0" text=" " />
          </children>
     </AnchorPane>
   </children>
