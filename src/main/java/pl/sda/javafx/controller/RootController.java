@@ -1,13 +1,19 @@
 package pl.sda.javafx.controller;
 
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import pl.sda.javafx.serivce.WeatherService;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,8 +23,9 @@ public class RootController implements Initializable {
     @FXML
     private Button search;
     @FXML
+    private Button OK;
+    @FXML
     private TextField city;
-
     @FXML
     private Label TemperatureCIn;
     @FXML
@@ -51,38 +58,43 @@ public class RootController implements Initializable {
     private ImageView WeatherImage;
 
 
-
-
-
-
     public void initialize(URL location, ResourceBundle resources) {
-      city .setText("Wpisz miasto");
+        city.setText ("Wpisz miasto");
 
     }
+
     public void setCity() throws IOException {
+        try {
+            WeatherService weatherService = new WeatherService ("http://api.apixu.com/v1/current.json", "1b301cfd93fe4ee0bd9123325191003");
+            CityIn.setText (city.getText ());
+            String cityName = (ChangePolishChars (city.getText ()));
+            TemperatureCIn.setText ((weatherService.getCityWeather (String.valueOf (cityName)).getCurrent ().getTemp_c ()) + " °C");
+            CountryIn.setText (weatherService.getCityWeather (cityName).getLocation ().getCountry ());
+            LocalTime.setText (weatherService.getCityWeather (cityName).getLocation ().getLocaltime ());
+            UpdateTime.setText (weatherService.getCityWeather (cityName).getCurrent ().getLast_updated ());
+            Description.setText (weatherService.getCityWeather (cityName).getCurrent ().getCondition ().getText ());
+            FeelTemperatureCIn.setText (weatherService.getCityWeather (String.valueOf (cityName)).getCurrent ().getFeelslike_c () + " °C");
+            FeelTemperatureFIn.setText (weatherService.getCityWeather (String.valueOf (cityName)).getCurrent ().getFeelslike_f () + " °F");
+            TemperatureFIn.setText (weatherService.getCityWeather (String.valueOf (cityName)).getCurrent ().getTemp_f () + " °F");
+            WindKphIn.setText (weatherService.getCityWeather (String.valueOf (cityName)).getCurrent ().getWind_kph () + " kph");
+            WindMphIn.setText (weatherService.getCityWeather (String.valueOf (cityName)).getCurrent ().getWind_mph () + " mph");
+            PressureIn.setText (weatherService.getCityWeather (String.valueOf (cityName)).getCurrent ().getPressure_mb () + " hPa");
+            HumdityIn.setText (weatherService.getCityWeather (String.valueOf (cityName)).getCurrent ().getHumidity () + "%");
+            Cloudy.setText (weatherService.getCityWeather (String.valueOf (cityName)).getCurrent ().getCloud () + "%");
+            WeatherImage.setImage (new Image ("http:" + weatherService.getCityWeather (cityName).getCurrent ().getCondition ().getIcon ()));
 
-    WeatherService weatherService = new WeatherService ("http://api.apixu.com/v1/current.json", "1b301cfd93fe4ee0bd9123325191003");
-    city.setText (ChangePolishChars (city.getText ()));
-    TemperatureCIn.setText ((weatherService.getCityWeather (String.valueOf (city.getText ())).getCurrent ().getTemp_c ()) + " °C");
-    CityIn.setText (weatherService.getCityWeather (city.getText ()).getLocation ().getName ());
-    CountryIn.setText (weatherService.getCityWeather (city.getText ()).getLocation ().getCountry ());
-    LocalTime.setText (weatherService.getCityWeather (city.getText ()).getLocation ().getLocaltime ());
-    UpdateTime.setText (weatherService.getCityWeather (city.getText ()).getCurrent ().getLast_updated ());
-    Description.setText (weatherService.getCityWeather (city.getText ()).getCurrent ().getCondition ().getText ());
-    FeelTemperatureCIn.setText (weatherService.getCityWeather (String.valueOf (city.getText ())).getCurrent ().getFeelslike_c () + " °C");
-    FeelTemperatureFIn.setText (weatherService.getCityWeather (String.valueOf (city.getText ())).getCurrent ().getFeelslike_f () + " °F");
-    TemperatureFIn.setText (weatherService.getCityWeather (String.valueOf (city.getText ())).getCurrent ().getTemp_f () + " °F");
-    WindKphIn.setText (weatherService.getCityWeather (String.valueOf (city.getText ())).getCurrent ().getWind_kph () + " kph");
-    WindMphIn.setText (weatherService.getCityWeather (String.valueOf (city.getText ())).getCurrent ().getWind_mph () + " mph");
-    PressureIn.setText (weatherService.getCityWeather (String.valueOf (city.getText ())).getCurrent ().getPressure_mb () + " hPa");
-    HumdityIn.setText (weatherService.getCityWeather (String.valueOf (city.getText ())).getCurrent ().getHumidity () + "%");
-    Cloudy.setText (weatherService.getCityWeather (String.valueOf (city.getText ())).getCurrent ().getCloud () + "%");
-    WeatherImage.setImage (new Image ("http:" + weatherService.getCityWeather (city.getText ()).getCurrent ().getCondition ().getIcon ()));
-}
+        } catch (IOException e) {
+            CityIn.setText ("Brak takiego miasta");
+            Stage popupStage = new Stage ();
+            Parent root =
+                    FXMLLoader.load (getClass ().getResource ("/popup.fxml"));
 
+            popupStage.setScene (new Scene (root, 300, 120));
+            popupStage.show ();
 
-
-    public String ChangePolishChars(String city){
+        }
+    }
+    public String ChangePolishChars(String city) {
 
         for (int i = 0; i < city.length (); i++)
             switch (city.charAt (i)) {
@@ -143,6 +155,6 @@ public class RootController implements Initializable {
                     break;
 
             }
-       return city;
+        return city;
     }
 }

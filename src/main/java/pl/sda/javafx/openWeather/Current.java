@@ -31,6 +31,7 @@ public class Current {
     private Double uv;
     private Double gust_mph;
     private Double gust_kph;
+    private Error error;
 
 
 
